@@ -56,5 +56,25 @@ function chi_13_cd_views_data() {
     ),
   );
 
+  $data['chi_13_cd_colors']['val'] = array(
+    'title' => t('HEX'),
+    'help' => t('HEX value of the color.'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+  );
+
+  // A pseudo field. We're actually querying the HEX value and rendering in an
+  // alternate manner.
+  $data['chi_13_cd_colors']['color'] = array(
+    'title' => t('Color'),
+    'help' => t('Display the color.'),
+    'field' => array(
+      'real field' => 'val',
+      'handler' => 'views_handler_field_chi_13_hex',
+    ),
+  );
+
   return $data;
 }

@@ -4,3 +4,5 @@ package = Chicago 2013
 core = 7.x
 
 dependencies[] = views
+
+files[] = views_handler_field_chi_13_hex.inc
