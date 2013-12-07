@@ -1,0 +1,4 @@
+name = Chicago 2013 Extra Fields
+description = "An example providing an Extra Field."
+package = Chicago 2013
+core = 7.x
