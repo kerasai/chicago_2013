@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Chicago 2013 Custom Data module code.
+ */
+
+/**
+ * Implements hook_views_api().
+ */
+function chi_13_cd_views_api() {
+  return array(
+    'api' => 3,
+  );
+}

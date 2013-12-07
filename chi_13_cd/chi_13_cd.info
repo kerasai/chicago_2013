@@ -1,5 +1,5 @@
 name = Chicago 2013 Custom Data
-description = "An example providing an Extra Field."
+description = "An example providing custom data to Views."
 package = Chicago 2013
 core = 7.x
 
