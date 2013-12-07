@@ -1,0 +1,6 @@
+name = Chicago 2013 Custom Data
+description = "An example providing an Extra Field."
+package = Chicago 2013
+core = 7.x
+
+dependencies[] = views
