@@ -5,6 +5,7 @@
  */
 function chi_13_ef_views_views_default_views() {
   $view = new view();
+  $view = new view();
   $view->name = 'chicago_13_ef_update';
   $view->description = '';
   $view->tag = 'default';
@@ -75,6 +76,13 @@ function chi_13_ef_views_views_default_views() {
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'issue' => 'issue',
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
