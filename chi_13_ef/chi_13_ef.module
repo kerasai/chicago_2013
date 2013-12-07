@@ -91,7 +91,7 @@ function template_preprocess_chi_13_update_adv(&$vars) {
   // 
   // This is hard-coded to nodes, as it's specifically looking for the changed
   // property.
-  $vars['aging'] = (REQUEST_TIME > $vars['entity']->changed + 10);
+  $vars['aging'] = chi_13_ef_node_aging($vars['entity']);
 }
 
 /**
@@ -111,4 +111,13 @@ function chi_13_ef_menu() {
   );
 
   return $items;
+}
+
+/**
+ * Quick function to check if a node is aging.
+ *
+ * This is a central location so we don't have to dupilcate the logic.
+ */
+function chi_13_ef_node_aging($node) {
+  return REQUEST_TIME > $node->changed + 10;
 }

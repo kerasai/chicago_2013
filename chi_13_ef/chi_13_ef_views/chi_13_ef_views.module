@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Chicago 2013 Extra Fields - Views Integration module code.
+ */
+
+/**
+ * Implements hook_views_api().
+ *
+ * We just need to tell Views that we have some functionality. Views will
+ * autoload the *.views.inc file as needed and invoke hooks present in there.
+ */
+function chi_13_ef_views_views_api() {
+  return array(
+    'api' => 3,
+  );
+}

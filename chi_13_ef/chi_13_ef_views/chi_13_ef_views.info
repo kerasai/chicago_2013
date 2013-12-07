@@ -1,0 +1,6 @@
+name = Chicago 2013 Extra Fields - Views Integration
+description = Views integration for Chicago 2013 Extra Fields
+package = Chicago 2013
+core = 7.x
+
+files[] = views_handler_field_chi_13_update_link.inc
