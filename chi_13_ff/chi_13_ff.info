@@ -1,0 +1,4 @@
+name = Chicago 2013 Field Formatters
+description = "An example providing custom field formatters."
+package = Chicago 2013
+core = 7.x

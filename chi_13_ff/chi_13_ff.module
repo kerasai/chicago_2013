@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * @file
+ * Chicago 2013 Field Formatters module code.
+ */
+
+/**
+ * Implements hook_field_formatter_info().
+ *
+ * Defines the formatters provided by this module.
+ *
+ * https://api.drupal.org/api/drupal/modules!field!field.api.php/function/hook_field_formatter_info/7
+ */
+function chi_13_ff_field_formatter_info() {
+  $formatters['chi_13_ff_do_link'] = array(
+    'label' => t('Drupal.org link'),
+    'description' => t('Link to a page on Drupal.org'),
+    'field types' => array('number_integer'),
+    'settings' => array(),
+  );
+
+  $formatters['chi_13_ff_link_image'] = array(
+    'label' => t('Image'),
+    'description' => t('Link displayed as an image'),
+    'field types' => array('link_field'),
+    'settings' => array(
+      'link' => FALSE,
+      'width' => 400,
+    ),
+  );
+
+  return $formatters;
+}
+
+/**
+ * Implments hook_field_formatter_view().
+ *
+ * Render the output for a field. Fields can have multiple values so we loop
+ * through the $items and build a renderable array containing the output.
+ *
+ * https://api.drupal.org/api/drupal/modules!field!field.api.php/function/hook_field_formatter_view/7
+ */
+function chi_13_ff_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+
+  $element = array();
+  $settings = $display['settings'];
+
+  // The rendering for all formatters defined by this module come through here
+  // so we first need to determine which formatter is being used.
+  switch ($display['type']) {
+
+    case 'chi_13_ff_do_link':
+      foreach ($items as $delta => $item) {
+        $element[$delta] = array(
+          '#type' => 'link',
+          '#href' => 'https://drupal.org/node/' . $item['value'],
+          '#title' => t('View on Drupal.org'),
+        );
+      }
+      break;
+
+    case 'chi_13_ff_link_image':
+      foreach ($items as $delta => $item) {
+        // Create the image.
+        $img = array(
+          '#theme' => 'image',
+          '#path' => $item['url'],
+          '#alt' => $item['title'],
+          '#width' => $settings['width'],
+        );
+
+        // If the image is linked, we'll create a link and tuck the image inside
+        // of it otherwise we'll pass back just the image.
+        if ($settings['link']) {
+          $element[$delta] = array(
+            '#theme' => 'link',
+            '#path' => $item['url'],
+            '#text' => render($img),
+            '#options' => array(
+              'attributes' => array(),
+              'html' => TRUE,
+            ),
+          );
+        }
+        else {
+          $element[$delta] = $img;
+        }
+      }
+      break;
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ *
+ * Provide a configuration form for a formatter.
+ */
+function chi_13_ff_field_formatter_settings_form($field, $instance, $view_mode, $form, $form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  switch ($display['type']) {
+    case 'chi_13_ff_link_image';
+      $form['width'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Width'),
+        '#default_value' => $settings['width'],
+      );
+      $form['link'] = array(
+        '#type' => 'checkbox',
+        '#title' => t('Link the image to the remote file.'),
+        '#default_value' => $settings['link'],
+      );
+  }
+
+  return $form;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ *
+ * Provide a summary of the configurations of a formatter.
+ */
+function chi_13_ff_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+  $summary = '';
+
+  switch ($display['type']) {
+    case 'chi_13_ff_link_image';
+      $summary .= "<strong>" . t('Width') . ":</strong> {$settings['width']}px<br />";
+      $link = $settings['link'] ? t('Yes') : t('No');
+      $summary .= "<strong>" . t('Link to Remote Image') . ":</strong> $link";
+      break;
+  }
+
+  return $summary;
+}
